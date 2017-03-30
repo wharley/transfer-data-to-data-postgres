@@ -19,19 +19,11 @@ module.exports = (sequelize, DataTypes) => {
         dt_ult_alteracao: {
             type: DataTypes.DATE,
             field: 'dt_ult_alteracao'
-        },
-        margem_preco: {
-            type: DataTypes.DOUBLE,
-            field: 'margem_preco'
-        },
-        exporta_site: {
-            type: DataTypes.STRING,
-            field: 'exporta_site'
         }
     }, {
         freezeTableName: true,
         schema: 'public',
-        tableName: 'setor',
+        tableName: 'ek_setor',
         timestamps: false
     });
 

@@ -1,77 +1,56 @@
 'user strict'
 
-var sequelize = require('sequelize')
-let modelMongoSetor = require('./../../../models/mongoose/ek_setor')
-let modelSequelize = require('./../../../config/db_sequelize_destino')
+const sequelize = require('sequelize')
+const destinySequelize = require('../../loading/destiny')
 
-exports.processSetor = () => {
-
-    searchSetorInsert()
-        .then(insertSetores)
-        .then(processTransMongo)
-        .then(updateTransMongo)
-        .then((data) => {
-            console.log('Upload: Transferencia de Novos Setores Finalizados.', data)
-        })
-}
-
-function searchSetorInsert() {
+exports.processDestinySectors = (sectors) => {
 
     return new Promise((resolve, reject) => {
 
-        modelMongoSetor.find({
-                "transferencia_destino": false,
-                "transferencia_origem": true
-            },
+        global['startSector'] = Date.now()
 
-            "-_id -__v -transferencia_destino -transferencia_origem",
+        processMap(sectors[0].sector)
+            .then((data) => {
+                global['endSector'] = Date.now()
+                resolve(sectors)
+            })
+            .catch((err) => {
+                reject(err)
+            })
+    })
 
-            { limit: 5000 }, (err, result) => {
+}
 
-                if (err) return console.log('ERRO 1 Setor Destino: ', err)
+function processMap(data) {
 
-                resolve(result)
+    const promises = data.map(processInsert)
+
+    return Promise.all(promises)
+
+}
+
+function processInsert(sector) {
+
+    return new Promise((resolve, reject) => {
+
+        destinySequelize.Sector.upsert(setObject(sector))
+            .then((data) => {
+                resolve(true)
+            }).catch((err) => {
+                console.log(err)
+                reject(err)
             })
     })
 }
 
-function insertSetores(result) {
+function setObject(sector) {
 
-    return new Promise((resolve, reject) => {
+    const obj = {
+        codigo_setor: sector.codigo_setor,
+        descricao_setor: sector.descricao_setor,
+        dt_cadastro: sector.dt_cadastro,
+        dt_ult_alteracao: sector.dt_ult_alteracao
+    }
 
-        modelSequelize.Setor.bulkCreate(result).then((data, err) => {
-
-            if (err) return console.log('ERRO 2 Setor Destino: ', err)
-
-            resolve(result)
-        });
-    })
-}
-
-function processTransMongo(result) {
-
-    const codes = result.map(code => code.codigo_setor)
-
-    return Promise.all(codes);
-}
-
-function updateTransMongo(result) {
-
-    return new Promise((resolve, reject) => {
-
-        let conditions = {
-            "codigo_setor": { $in: result },
-            "transferencia_destino": false,
-            "transferencia_origem": true
-        }
-        let update = { $set: { "transferencia_destino": true } }
-        let options = { multi: true }
-
-        modelMongoSetor.update(conditions, update, options, (err, data) => {
-
-            if (err) return console.log('ERRO 3 Setor Destino: ', err)
-
-            resolve(true)
-        })
-    })
+    return obj
 }
