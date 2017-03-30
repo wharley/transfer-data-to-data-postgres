@@ -1,0 +1,7 @@
+{
+    "parameter": {
+        "transfer": false,
+        "product": true,
+        "person": false
+    }
+}
