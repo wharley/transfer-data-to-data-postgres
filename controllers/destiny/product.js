@@ -7,8 +7,11 @@ exports.processDestinyProducts = (products) => {
 
     return new Promise((resolve, reject) => {
 
+        global['startProduct'] = Date.now()
+
         processMap(products[0].product)
             .then((data) => {
+                global['endProduct'] = Date.now()
                 resolve(products)
             })
             .catch((err) => {

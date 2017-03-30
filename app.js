@@ -15,6 +15,7 @@ global = require('underscore')
 
 if (paramts.transfer) {
 
+
     const unit = Promise.resolve(sourceUnit.processUnits())
     const product = Promise.resolve(sourceProduct.processProducts())
     const person = Promise.resolve(sourcePerson.processPersons())
@@ -23,10 +24,20 @@ if (paramts.transfer) {
     Promise.all([unit, product, person, note])
         .then((data) => {
 
+            console.log(`Finalizando busca origem Unit ${global.endUnit - global.startUnit} ms`)
+            console.log(`Finalizando busca origem Product ${global.endProduct - global.startProduct} ms`)
+            console.log(`Finalizando busca origem Person ${global.endPerson - global.startPerson} ms`)
+            console.log(`Finalizando busca origem Note ${global.endNote - global.startNote} ms`)
+
             destinyProduct.processDestinyProducts(data)
                 .then(destinyPerson.processDestinyPersons)
                 .then(destinyTransfer.processDestinyNotes)
                 .then((data) => {
+
+                    console.log(`Finalizando Insert/Update destino Unit ${global.endUnit - global.startUnit} ms`)
+                    console.log(`Finalizando Insert/Update destino Product ${global.endProduct - global.startProduct} ms`)
+                    console.log(`Finalizando Insert/Update destino Person ${global.endPerson - global.startPerson} ms`)
+                    console.log(`Finalizando Insert/Update destino Note ${global.endNote - global.startNote} ms`)
                     console.log('Finalizado com sucesso')
                 })
         })
@@ -39,9 +50,17 @@ if (paramts.product) {
     Promise.all([unit, product])
         .then((data) => {
 
+            console.log(`Finalizando busca origem Unit ${global.endUnit - global.startUnit} ms`)
+            console.log(`Finalizando busca origem Product ${global.endProduct - global.startProduct} ms`)
+
             destinyProduct.processDestinyProducts(data)
+                //                .then(destinyUnit.processDestinyUnits)
                 .then((data) => {
+
+                    console.log(`Finalizando Insert/Update destino Unit ${global.endUnit - global.startUnit} ms`)
+                    console.log(`Finalizando Insert/Update destino Product ${global.endProduct - global.startProduct} ms`)
                     console.log('Finalizado com sucesso')
+
                 })
         })
 }
@@ -52,9 +71,12 @@ if (paramts.person) {
     Promise.all(person)
         .then((data) => {
 
+            console.log(`Finalizando busca origem Person ${global.endPerson - global.startPerson} ms`)
+
             destinyPerson.processDestinyPersons(data)
                 .then(destinyPerson.processDestinyPersons)
                 .then((data) => {
+                    console.log(`Finalizando Insert/Update destino Person ${global.endPerson - global.startPerson} ms`)
                     console.log('Finalizado com sucesso')
                 })
         })

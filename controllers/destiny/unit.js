@@ -7,8 +7,11 @@ exports.processDestinyUnits = (units) => {
 
     return new Promise((resolve, reject) => {
 
+        global['startUnit'] = Date.now()
+
         processMap(units[0].unit)
             .then((data) => {
+                global['endUnit'] = Date.now()
                 resolve(units)
             })
             .catch((err) => {

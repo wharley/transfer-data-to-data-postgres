@@ -7,9 +7,12 @@ exports.processPersons = () => {
 
     return new Promise((resolve, reject) => {
 
+        global['startPerson'] = Date.now()
+
         sourceSequelize.Person.findAll({})
             .then((data) => {
                 global['person'] = data
+                global['endPerson'] = Date.now()
                 resolve(global)
             }).catch((err) => {
                 reject(err)

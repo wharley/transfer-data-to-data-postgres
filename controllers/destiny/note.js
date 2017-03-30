@@ -6,8 +6,12 @@ const destinySequelize = require('../../loading/destiny')
 exports.processDestinyNotes = (notes) => {
 
     return new Promise((resolve, reject) => {
+
+        global['startNote'] = Date.now()
+
         processMap(notes[0].note)
             .then((data) => {
+                global['endNote'] = Date.now()
                 resolve(notes)
             })
             .catch((err) => {

@@ -6,8 +6,12 @@ const destinySequelize = require('../../loading/destiny')
 exports.processDestinyPersons = (persons) => {
 
     return new Promise((resolve, reject) => {
+
+        global['startPerson'] = Date.now()
+
         processMap(persons[0].person)
             .then((data) => {
+                global['endPerson'] = Date.now()
                 resolve(persons)
             })
             .catch((err) => {
