@@ -29,7 +29,8 @@ if (paramts.transfer) {
             console.log(`Finalizando busca origem Person ${global.endPerson - global.startPerson} ms`)
             console.log(`Finalizando busca origem Note ${global.endNote - global.startNote} ms`)
 
-            destinyProduct.processDestinyProducts(data)
+            destinyUnit.processDestinyUnits(data)
+                .then(destinyProduct.processDestinyProducts)
                 .then(destinyPerson.processDestinyPersons)
                 .then(destinyTransfer.processDestinyNotes)
                 .then((data) => {
@@ -53,8 +54,8 @@ if (paramts.product) {
             console.log(`Finalizando busca origem Unit ${global.endUnit - global.startUnit} ms`)
             console.log(`Finalizando busca origem Product ${global.endProduct - global.startProduct} ms`)
 
-            destinyProduct.processDestinyProducts(data)
-                //                .then(destinyUnit.processDestinyUnits)
+            destinyUnit.processDestinyUnits(data)
+                .then(destinyProduct.processDestinyProducts)
                 .then((data) => {
 
                     console.log(`Finalizando Insert/Update destino Unit ${global.endUnit - global.startUnit} ms`)
