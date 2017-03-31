@@ -268,7 +268,7 @@ module.exports = (sequelize, DataTypes) => {
     }, {
         freezeTableName: true,
         schema: 'public',
-        tableName: 'produto',
+        tableName: 'ek_produto',
         timestamps: false
     });
 

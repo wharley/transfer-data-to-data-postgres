@@ -385,6 +385,10 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             field: 'num_doc_servico'
         },
+        // num_doc_ref: {
+        //     type : DataTypes.STRING,
+        //     field: 'num_doc_ref'
+        // },
         vl_icms_fcp_uf_dest: {
             type: DataTypes.DOUBLE,
             field: 'vl_icms_fcp_uf_dest'
@@ -401,10 +405,15 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             field: 'desc_cancelamento'
         }
+        // ,
+        // seq_nota_transf: {
+        //     type: DataTypes.INTEGER,
+        //     field: 'seq_nota_transf'
+        // }
     }, {
         freezeTableName: true,
         schema: 'public',
-        tableName: 'nota',
+        tableName: 'ek_nota',
         timestamps: false
     });
 

@@ -12,8 +12,11 @@ const models = [
     '../models/note',
     '../models/person',
     '../models/unit',
-    '../models/product',
-    '../models/sector'
+    '../models/sector',
+    '../models/group',
+    '../models/subGroup',
+    '../models/eanProduct',
+    '../models/product'
 ];
 
 let l = models.length

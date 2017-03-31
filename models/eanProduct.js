@@ -2,24 +2,15 @@
 
 module.exports = (sequelize, DataTypes) => {
 
-    const unit = sequelize.define('Unit', {
-        num_unid_medida: {
+    const eanProduct = sequelize.define('EanProduct', {
+        cod_produto: {
             type: DataTypes.INTEGER,
             primaryKey: true,
-            field: 'num_unid_medida'
+            field: 'cod_produto'
         },
-        unidade_medida: {
+        cod_barra: {
             type: DataTypes.STRING,
-            field: 'unidade_medida',
-            unique: true
-        },
-        ft_conv: {
-            type: DataTypes.STRING,
-            field: 'ft_conv'
-        },
-        descricao: {
-            type: DataTypes.STRING,
-            field: 'descricao'
+            field: 'cod_barra'
         },
         dt_cadastro: {
             type: DataTypes.DATE,
@@ -32,9 +23,9 @@ module.exports = (sequelize, DataTypes) => {
     }, {
         freezeTableName: true,
         schema: 'public',
-        tableName: 'ek_unid_medida',
+        tableName: 'ek_produto_ean',
         timestamps: false
     });
 
-    return unit;
+    return eanProduct;
 };
