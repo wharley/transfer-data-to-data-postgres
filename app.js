@@ -1,24 +1,23 @@
 'use strict'
 
 const paramts = require('./config/parameter.json')["parameter"]
-const sourceTransfer = require('./controllers/source/note')
-const sourceUnit = require('./controllers/source/unit')
-const sourceSector = require('./controllers/source/sector')
-const sourceGroup = require('./controllers/source/group')
-const sourceSubGroup = require('./controllers/source/subGroup')
-const sourceProduct = require('./controllers/source/product')
-const sourceEanProduct = require('./controllers/source/eanProduct')
-const sourcePerson = require('./controllers/source/person')
+const sourceProcess = require('./controllers/source/sourceData')
+const destinyProcess = require('./controllers/destiny/destinyData')
 
-const destinyTransfer = require('./controllers/destiny/note')
-const destinyUnit = require('./controllers/destiny/unit')
-const destinySector = require('./controllers/destiny/sector')
-const destinyGroup = require('./controllers/destiny/group')
-const destinySubGroup = require('./controllers/destiny/subGroup')
-const destinyProduct = require('./controllers/destiny/product')
-const destinyEanProduct = require('./controllers/destiny/eanProduct')
-const destinyPerson = require('./controllers/destiny/person')
 global = require('underscore')
+
+global = {
+    models: [
+        'Unit',
+        'Sector',
+        'Group',
+        'SubGroup',
+        'Product',
+        'EanProduct',
+        'Person',
+        'Note'
+    ]
+}
 
 processRoutines()
 
@@ -31,14 +30,14 @@ function processRoutines() {
 
     if (paramts.transfer) {
 
-        const unit = Promise.resolve(sourceUnit.processUnits())
-        const sector = Promise.resolve(sourceSector.processSectors())
-        const group = Promise.resolve(sourceGroup.processGroups())
-        const subGroup = Promise.resolve(sourceSubGroup.processSubGroups())
-        const product = Promise.resolve(sourceProduct.processProducts())
-        const eanProduct = Promise.resolve(sourceEanProduct.processEanProducts())
-        const person = Promise.resolve(sourcePerson.processPersons())
-        const note = Promise.resolve(sourceTransfer.processNotes())
+        const unit = Promise.resolve(sourceProcess.processSources(global.models[0]))
+        const sector = Promise.resolve(sourceProcess.processSources(global.models[1]))
+        const group = Promise.resolve(sourceProcess.processSources(global.models[2]))
+        const subGroup = Promise.resolve(sourceProcess.processSources(global.models[3]))
+        const product = Promise.resolve(sourceProcess.processSources(global.models[4]))
+        const eanProduct = Promise.resolve(sourceProcess.processSources(global.models[5]))
+        const person = Promise.resolve(sourceProcess.processSources(global.models[6]))
+        const note = Promise.resolve(sourceProcess.processSources(global.models[7]))
 
         Promise.all([unit, sector, group, subGroup, product, eanProduct, person, note])
             .then((data) => {
@@ -56,14 +55,15 @@ function processRoutines() {
 
                 printMenssage(menssage)
 
-                destinyUnit.processDestinyUnits(data)
-                    .then(destinySector.processDestinySectors)
-                    .then(destinyGroup.processDestinyGroups)
-                    .then(destinySubGroup.processDestinySubGroups)
-                    .then(destinyProduct.processDestinyProducts)
-                    .then(destinyEanProduct.processDestinyEanProducts)
-                    .then(destinyPerson.processDestinyPersons)
-                    .then(destinyTransfer.processDestinyNotes)
+                global['index'] = 0
+                destinyProcess.processDestinys(data)
+                    .then(destinyProcess.processDestinys)
+                    .then(destinyProcess.processDestinys)
+                    .then(destinyProcess.processDestinys)
+                    .then(destinyProcess.processDestinys)
+                    .then(destinyProcess.processDestinys)
+                    .then(destinyProcess.processDestinys)
+                    .then(destinyProcess.processDestinys)
                     .then((data) => {
 
                         const menssage = [
@@ -85,12 +85,12 @@ function processRoutines() {
     }
     if (paramts.product) {
 
-        const unit = Promise.resolve(sourceUnit.processUnits())
-        const sector = Promise.resolve(sourceSector.processSectors())
-        const group = Promise.resolve(sourceGroup.processGroups())
-        const subGroup = Promise.resolve(sourceSubGroup.processSubGroups())
-        const product = Promise.resolve(sourceProduct.processProducts())
-        const eanProduct = Promise.resolve(sourceEanProduct.processEanProducts())
+        const unit = Promise.resolve(sourceProcess.processSources(global.models[0]))
+        const sector = Promise.resolve(sourceProcess.processSources(global.models[1]))
+        const group = Promise.resolve(sourceProcess.processSources(global.models[2]))
+        const subGroup = Promise.resolve(sourceProcess.processSources(global.models[3]))
+        const product = Promise.resolve(sourceProcess.processSources(global.models[4]))
+        const eanProduct = Promise.resolve(sourceProcess.processSources(global.models[5]))
 
         Promise.all([unit, sector, group, subGroup, product, eanProduct])
             .then((data) => {
@@ -106,12 +106,13 @@ function processRoutines() {
 
                 printMenssage(menssage)
 
-                destinyUnit.processDestinyUnits(data)
-                    .then(destinySector.processDestinySectors)
-                    .then(destinyGroup.processDestinyGroups)
-                    .then(destinySubGroup.processDestinySubGroups)
-                    .then(destinyProduct.processDestinyProducts)
-                    .then(destinyEanProduct.processDestinyEanProducts)
+                global['index'] = 0
+                destinyProcess.processDestinys(data)
+                    .then(destinyProcess.processDestinys)
+                    .then(destinyProcess.processDestinys)
+                    .then(destinyProcess.processDestinys)
+                    .then(destinyProcess.processDestinys)
+                    .then(destinyProcess.processDestinys)
                     .then((data) => {
 
                         const menssage = [
@@ -132,7 +133,7 @@ function processRoutines() {
     }
     if (paramts.person) {
 
-        const person = Promise.resolve(sourcePerson.processPersons())
+        const person = Promise.resolve(sourceProcess.processSources(global.models[6]))
 
         Promise.all(person)
             .then((data) => {
@@ -143,8 +144,8 @@ function processRoutines() {
 
                 printMenssage(menssage)
 
-                destinyPerson.processDestinyPersons(data)
-                    .then(destinyPerson.processDestinyPersons)
+                global['index'] = 6
+                destinyProcess.processDestinys(data)
                     .then((data) => {
                         const menssage = [
                             `Finishing Insert/Update Target Person ${global.endPerson - global.startPerson} ms`

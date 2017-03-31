@@ -32,7 +32,7 @@ module.exports = (sequelize, DataTypes) => {
     }, {
         freezeTableName: true,
         schema: 'public',
-        tableName: 'ek_unid_medida',
+        tableName: 'unidade_medida',
         timestamps: false
     });
 

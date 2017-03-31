@@ -1,18 +1,18 @@
-'user strict'
+'use strict'
 
 const sequelize = require('sequelize')
 const sourceSequelize = require('../../loading/source')
 
-exports.processPersons = () => {
+exports.processSources = (models) => {
 
     return new Promise((resolve, reject) => {
 
-        global['startPerson'] = Date.now()
+        global['start' + models] = Date.now()
 
-        sourceSequelize.Person.findAll({})
+        sourceSequelize[models].findAll({})
             .then((data) => {
-                global['person'] = data
-                global['endPerson'] = Date.now()
+                global[models.toLowerCase()] = data
+                global['end' + models] = Date.now()
                 resolve(global)
             }).catch((err) => {
                 reject(err)

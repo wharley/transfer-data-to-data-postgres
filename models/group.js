@@ -27,7 +27,7 @@ module.exports = (sequelize, DataTypes) => {
     }, {
         freezeTableName: true,
         schema: 'public',
-        tableName: 'ek_grupo',
+        tableName: 'grupo',
         timestamps: false,
         classMethods: {
             associate: (model) => {

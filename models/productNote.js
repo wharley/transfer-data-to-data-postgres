@@ -404,7 +404,7 @@ module.exports = (sequelize, DataTypes) => {
     }, {
         freezeTableName: true,
         schema: 'public',
-        tableName: 'ek_item_nota',
+        tableName: 'item_nota',
         timestamps: false,
         classMethods: {
             associate: (model) => {

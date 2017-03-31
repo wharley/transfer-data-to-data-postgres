@@ -2,17 +2,22 @@
 
 const sequelize = require('sequelize')
 const destinySequelize = require('../../loading/destiny')
+const structure = require('../../structure/structure')
 
-exports.processDestinySectors = (sectors) => {
+let sourceModels = ''
+
+exports.processDestinys = (datas) => {
 
     return new Promise((resolve, reject) => {
 
-        global['startSector'] = Date.now()
+        global['start' + global.models[global.index]] = Date.now()
 
-        processMap(sectors[0].sector)
+        processMap(datas[0][global.models[global.index].toLowerCase()])
             .then((data) => {
-                global['endSector'] = Date.now()
-                resolve(sectors)
+                global['end' + global.models[global.index]] = Date.now()
+                global.index++
+
+                    resolve(datas)
             })
             .catch((err) => {
                 reject(err)
@@ -29,11 +34,11 @@ function processMap(data) {
 
 }
 
-function processInsert(sector) {
+function processInsert(source) {
 
     return new Promise((resolve, reject) => {
 
-        destinySequelize.Sector.upsert(setObject(sector))
+        destinySequelize[global.models[global.index]].upsert(structure[global.models[global.index]](source))
             .then((data) => {
                 resolve(true)
             }).catch((err) => {
@@ -41,16 +46,4 @@ function processInsert(sector) {
                 reject(err)
             })
     })
-}
-
-function setObject(sector) {
-
-    const obj = {
-        codigo_setor: sector.codigo_setor,
-        descricao_setor: sector.descricao_setor,
-        dt_cadastro: sector.dt_cadastro,
-        dt_ult_alteracao: sector.dt_ult_alteracao
-    }
-
-    return obj
 }
