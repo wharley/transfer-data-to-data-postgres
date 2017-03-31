@@ -84,7 +84,7 @@ function processRoutines() {
                     .then(destinyProcess.processDestinys)
                     .then((data) => {
 
-                        targetMenssage(menssage)
+                        targetMenssage(5)
 
                         console.log('Finished successfully')
 
