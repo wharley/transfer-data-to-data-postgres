@@ -42,18 +42,7 @@ function processRoutines() {
         Promise.all([unit, sector, group, subGroup, product, eanProduct, person, note])
             .then((data) => {
 
-                const menssage = [
-                    `Finishing source search Unit ${global.endUnit - global.startUnit} ms`,
-                    `Finishing source search Sector ${global.endSector - global.startSector} ms`,
-                    `Finishing source search Group ${global.endGroup - global.startGroup} ms`,
-                    `Finishing source search SubGroup ${global.endSubGroup - global.startSubGroup} ms`,
-                    `Finishing source search Product ${global.endProduct - global.startProduct} ms`,
-                    `Finishing source search EanProduct ${global.endEanProduct - global.startEanProduct} ms`,
-                    `Finishing source search Person ${global.endPerson - global.startPerson} ms`,
-                    `Finishing source search Note ${global.endNote - global.startNote} ms`
-                ]
-
-                printMenssage(menssage)
+                serachMenssage(8)
 
                 global['index'] = 0
                 destinyProcess.processDestinys(data)
@@ -66,18 +55,7 @@ function processRoutines() {
                     .then(destinyProcess.processDestinys)
                     .then((data) => {
 
-                        const menssage = [
-                            `Finishing Insert/Update Target Unit ${global.endUnit - global.startUnit} ms`,
-                            `Finishing Insert/Update Target Sector ${global.endSector - global.startSector} ms`,
-                            `Finishing Insert/Update Target Group ${global.endGroup - global.startGroup} ms`,
-                            `Finishing Insert/Update Target SubGroup ${global.endSubGroup - global.startSubGroup} ms`,
-                            `Finishing Insert/Update Target Product ${global.endProduct - global.startProduct} ms`,
-                            `Finishing Insert/Update Target EanProduct ${global.endEanProduct - global.startEanProduct} ms`,
-                            `Finishing Insert/Update Target Person ${global.endPerson - global.startPerson} ms`,
-                            `Finishing Insert/Update Target Note ${global.endNote - global.startNote} ms`
-                        ]
-
-                        printMenssage(menssage)
+                        targetMenssage(8)
 
                         console.log('Finished successfully')
                     })
@@ -95,16 +73,7 @@ function processRoutines() {
         Promise.all([unit, sector, group, subGroup, product, eanProduct])
             .then((data) => {
 
-                const menssage = [
-                    `Finishing source search Unit ${global.endUnit - global.startUnit} ms`,
-                    `Finishing source search Sector ${global.endSector - global.startSector} ms`,
-                    `Finishing source search Group ${global.endGroup - global.startGroup} ms`,
-                    `Finishing source search SubGroup ${global.endSubGroup - global.startSubGroup} ms`,
-                    `Finishing source search Product ${global.endProduct - global.startProduct} ms`,
-                    `Finishing source search EanProduct ${global.endEanProduct - global.startEanProduct} ms`
-                ]
-
-                printMenssage(menssage)
+                searchMenssage(5)
 
                 global['index'] = 0
                 destinyProcess.processDestinys(data)
@@ -115,16 +84,7 @@ function processRoutines() {
                     .then(destinyProcess.processDestinys)
                     .then((data) => {
 
-                        const menssage = [
-                            `Finishing Insert/Update Target Unit ${global.endUnit - global.startUnit} ms`,
-                            `Finishing Insert/Update Target Sector ${global.endSector - global.startSector} ms`,
-                            `Finishing Insert/Update Target Sector ${global.endGroup - global.startGroup} ms`,
-                            `Finishing Insert/Update Target Sector ${global.endSubGroup - global.startSubGroup} ms`,
-                            `Finishing Insert/Update Target Product ${global.endProduct - global.startProduct} ms`,
-                            `Finishing Insert/Update Target EanProduct ${global.endEanProduct - global.startEanProduct} ms`
-                        ]
-
-                        printMenssage(menssage)
+                        targetMenssage(menssage)
 
                         console.log('Finished successfully')
 
@@ -138,30 +98,32 @@ function processRoutines() {
         Promise.all(person)
             .then((data) => {
 
-                const menssage = [
-                    `Finishing source search Person ${global.endPerson - global.startPerson} ms`
-                ]
-
-                printMenssage(menssage)
+                searchMenssage(1)
 
                 global['index'] = 6
                 destinyProcess.processDestinys(data)
                     .then((data) => {
-                        const menssage = [
-                            `Finishing Insert/Update Target Person ${global.endPerson - global.startPerson} ms`
-                        ]
 
-                        printMenssage(menssage)
+                        targetMenssage(1)
                         console.log('Finished successfully')
                     })
             })
     }
 }
 
-function printMenssage(menssage) {
+function searchMenssage(tamanho) {
 
-    for (let i = 0; i < menssage.length; i++)
-        console.log(menssage[i])
+    for (let i = 0; i < tamanho; i++)
+        console.log(`Finishing source search ${global.models[i] } ${global['end' + global.models[i]] - global['start' +global.models[i]]} ms`)
+
+    return true
+
+}
+
+function targetMenssage(tamanho) {
+
+    for (let i = 0; i < tamanho; i++)
+        console.log(`Finishing Insert/Update Target ${global.models[i] } ${global['end' + global.models[i]] - global['start' +global.models[i]]} ms`)
 
     return true
 
