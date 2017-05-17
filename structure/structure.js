@@ -1,7 +1,7 @@
 'use strict'
 
 const setObject = {
-    Unit: function(data) {
+    Unit: (data) => {
         const obj = {
             num_unid_medida: data.num_unid_medida,
             unidade_medida: data.unidade_medida,
@@ -13,7 +13,7 @@ const setObject = {
 
         return obj
     },
-    Sector: function(data) {
+    Sector: (data) => {
         const obj = {
             codigo_setor: data.codigo_setor,
             descricao_setor: data.descricao_setor,
@@ -23,7 +23,7 @@ const setObject = {
 
         return obj
     },
-    Group: function(data) {
+    Group: (data) => {
         const obj = {
             codigo_grupo: data.codigo_grupo,
             descricao_grupo: data.descricao_grupo,
@@ -34,7 +34,7 @@ const setObject = {
 
         return obj
     },
-    SubGroup: function(data) {
+    SubGroup: (data) => {
         const obj = {
             codigo_subgrupo: data.codigo_subgrupo,
             descricao_subgrupo: data.descricao_subgrupo,
@@ -46,7 +46,7 @@ const setObject = {
 
         return obj
     },
-    Product: function(data) {
+    Product: (data) => {
         const obj = {
             cod_produto: data.cod_produto,
             desc_produto: data.desc_produto,
@@ -117,7 +117,7 @@ const setObject = {
 
         return obj
     },
-    Person: function(data) {
+    Person: (data) => {
         const obj = {
             cod_pessoa: data.cod_pessoa,
             nome: data.nome,
@@ -187,7 +187,7 @@ const setObject = {
 
         return obj
     },
-    EanProduct: function(data) {
+    EanProduct: (data) => {
         const obj = {
             cod_produto: data.cod_produto,
             cod_barra: data.cod_barra,
@@ -197,7 +197,7 @@ const setObject = {
 
         return obj
     },
-    Note: function(data) {
+    Note: (data) => {
         const obj = {
             num_empresa: data.num_empresa,
             ind_oper: data.ind_oper,
